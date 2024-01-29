@@ -1,0 +1,53 @@
+.chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+}
+
+.whiteSquare,
+.blackSquare {
+    width: 50px;
+    height: 50px;
+    /* Relativ positioniert bedeutet, dass sie Container für absolut positionierte Kindelemente oder Pseudoelemente sein können*/
+    /* Wichtig, da highlight absolut positioniert wird */
+    position: relative;
+}
+
+.whiteSquare {
+    background-color: beige;
+}
+
+.blackSquare {
+    background-color: brown;
+}
+
+
+.whiteSquare img,
+.blackSquare img {
+    width: 95%;
+    height: 95%;
+}
+
+/* Pseudoelement-Selektor, der ein Element nach allen Elementen mit der Klasse .highlight einfügt */
+/* Könnte auch bspw. div-Block mit highlight als Klasse hinzufügen, spare aber so an tags */
+.highlight {
+    content: '';
+    /* Notwending um das Pseudo Element anzuzeigen */
+    display: block;
+    /* Was macht das Element zu einem Block Element, wodurch es Breite und Höhe erhält */
+    position: absolute;
+    /* Absolute positionierung innerhalb seines nächsten relativ positionierten Elternelements */
+
+    /* Stellt sicher, dass das Element perfekt zentriert ist */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 10px;
+    height: 10px;
+    background-color: rgba(0, 255, 0, 0.7);
+    border-radius: 50%;
+    /* Macht es vollkommen rund */
+    pointer-events: none;
+    /* Verhindern von blockieren von Mausereignissen */
+}
