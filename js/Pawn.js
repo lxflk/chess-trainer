@@ -31,7 +31,7 @@ export class Pawn extends Pieces {
 
         // Erster Zug: Zwei Felder vorwärts
         if (this.getColor() === "white" && x == 6 || (this.getColor() === "black" && x === 1)) {
-            if (board.getPiece(x + direction * 2, y) === null) {
+            if (board.getPiece(x + direction * 2, y) === null && board.getPiece(x + direction, y) === null) {
                 moves.push({ x: x + direction * 2, y: y });
             }
         }
@@ -46,4 +46,6 @@ export class Pawn extends Pieces {
 
         return moves;
     }
+
+
 }

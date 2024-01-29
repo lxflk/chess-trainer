@@ -30,7 +30,7 @@
 
 /* Pseudoelement-Selektor, der ein Element nach allen Elementen mit der Klasse .highlight einfügt */
 /* Könnte auch bspw. div-Block mit highlight als Klasse hinzufügen, spare aber so an tags */
-.highlight {
+.highlight::after {
     content: '';
     /* Notwending um das Pseudo Element anzuzeigen */
     display: block;

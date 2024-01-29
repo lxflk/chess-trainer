@@ -32,7 +32,6 @@ export class Chessboard {
     }
 
     getPiece(x, y) {
-        console.log(`Called getPiece with x=${x}, y=${y}`);
         return this.#board[x][y];
     }
 
@@ -41,54 +40,37 @@ export class Chessboard {
     }
 
     addAllPieces() {
-        //Add Pawns
-        for (let i = 0; i < 8; i++) {
-            let whitePawn = new Pawn("white", this);
-            let blackPawn = new Pawn("black", this);
+        const initialSetup = [
+            { type: Rook, color: "white", positions: [{ x: 7, y: 0 }, { x: 7, y: 7 }] },
+            { type: Knight, color: "white", positions: [{ x: 7, y: 1 }, { x: 7, y: 6 }] },
+            { type: Bishop, color: "white", positions: [{ x: 7, y: 2 }, { x: 7, y: 5 }] },
+            { type: Queen, color: "white", positions: [{ x: 7, y: 3 }] },
+            { type: King, color: "white", positions: [{ x: 7, y: 4 }] },
+            { type: Pawn, color: "white", positions: Array.from({ length: 8 }, (_, y) => ({ x: 6, y })) },
 
-            this.addPiece(whitePawn, 6, i);
-            this.addPiece(blackPawn, 1, i);
-        }
+            { type: Rook, color: "black", positions: [{ x: 0, y: 0 }, { x: 0, y: 7 }] },
+            { type: Knight, color: "black", positions: [{ x: 0, y: 1 }, { x: 0, y: 6 }] },
+            { type: Bishop, color: "black", positions: [{ x: 0, y: 2 }, { x: 0, y: 5 }] },
+            { type: Queen, color: "black", positions: [{ x: 0, y: 3 }] },
+            { type: King, color: "black", positions: [{ x: 0, y: 4 }] },
+            { type: Pawn, color: "black", positions: Array.from({ length: 8 }, (_, y) => ({ x: 1, y })) },
+        ];
 
-        //Add Rooks
-        for (let i = 0; i < 2; i++) {
-            let whiteRook = new Rook("white", this);
-            let blackRook = new Rook("black", this);
-
-            this.addPiece(whiteRook, 7, i * 7);
-            this.addPiece(blackRook, 0, i * 7);
-        }
-
-        //Add Bishops
-        for (let i = 0; i < 2; i++) {
-            let whiteBishop = new Bishop("white", this);
-            let blackBishop = new Bishop("black", this);
-
-            this.addPiece(whiteBishop, 7, 1 + i * 5);
-            this.addPiece(blackBishop, 0, 1 + i * 5);
-        }
-
-        //Add Knights
-        for (let i = 0; i < 2; i++) {
-            let whiteKnight = new Knight("white", this);
-            let blackKnight = new Knight("black", this);
-
-            this.addPiece(whiteKnight, 7, 2 + i * 3);
-            this.addPiece(blackKnight, 0, 2 + i * 3);
-        }
-
-        //Add Queens
-        let whiteQueen = new Queen("white", this);
-        let blackQueen = new Queen("black", this);
-
-        this.addPiece(whiteQueen, 7, 3);
-        this.addPiece(blackQueen, 0, 3);
-
-        //Add Kings
-        let whiteKing = new King("white", this);
-        let blackKing = new King("black", this);
-
-        this.addPiece(whiteKing, 7, 4);
-        this.addPiece(blackKing, 0, 4);
+        initialSetup.forEach(pieceSetup => {
+            pieceSetup.positions.forEach(position => {
+                const piece = new pieceSetup.type(pieceSetup.color, this);
+                this.addPiece(piece, position.x, position.y);
+            });
+        });
     }
+
+    movePiece(fromX, fromY, toX, toY) {
+        let movingPiece = this.getPiece(fromX, fromY);
+        if (movingPiece) {
+            this.addPiece(movingPiece, toX, toY);
+            this.#board[fromX][fromY] = null;
+            movingPiece.setPosition(toX, toY);
+        }
+    }
+
 }

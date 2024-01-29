@@ -12,10 +12,6 @@ export class Pieces {
 
     }
 
-    move() {
-
-    }
-
     getImage() {
 
     }
@@ -39,5 +35,10 @@ export class Pieces {
     setPosition(x, y) {
         this.#x = x;
         this.#y = y;
+    }
+
+    canMoveTo(x, y) {
+        let moves = this.getMoves();
+        return moves.some(move => move.x === x && move.y === y);
     }
 }
